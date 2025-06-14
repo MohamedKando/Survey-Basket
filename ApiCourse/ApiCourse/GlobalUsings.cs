@@ -1,0 +1,17 @@
+﻿global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using ApiCourse.Models;
+global using ApiCourse.Abstactions;
+global using ApiCourse.Contract.Authentcations;
+global using ApiCourse.Contract.Polls;
+global using FluentValidation;
+global using ApiCourse.Services;
+global using ApiCourse.Errors;
+global using FluentValidation.AspNetCore;
+global using Mapster;
+global using MapsterMapper;
+global using System.Reflection;
+global using ApiCourse;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.EntityFrameworkCore;
+global using System.ComponentModel.DataAnnotations;
