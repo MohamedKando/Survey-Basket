@@ -14,11 +14,17 @@ namespace ApiCourse.Persistence
             _httpContextAccessor = httpContextAccessor;   
         }
         public DbSet<Poll> Polls { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Every Assembly i used to make the class is easly used across all project zy el fluentvalidation and maspter
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetForeignKeys()).
+                Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
+            foreach (var fk in cascadeFKs)
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+            // Every Assembly i used to make the fluent api (Configrations) class is easly used across all project zy el fluentvalidation and maspter
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 

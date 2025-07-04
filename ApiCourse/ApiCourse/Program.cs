@@ -35,5 +35,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 //app.MapIdentityApi<ApplicationUser>();
 app.MapControllers();
-
+//app.UseExceptionHandler();
 app.Run();

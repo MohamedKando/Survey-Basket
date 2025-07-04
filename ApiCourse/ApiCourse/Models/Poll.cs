@@ -10,5 +10,7 @@
         public bool IsPublished { get; set; }
         public DateTime StartsAt { get; set; }
         public DateTime EndsAt { get; set; }
+
+        public ICollection<Question> Questions { get; set; } = [];
     }
 }

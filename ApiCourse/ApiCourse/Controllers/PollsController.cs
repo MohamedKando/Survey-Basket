@@ -47,7 +47,9 @@ public class PollsController : ControllerBase
     {
 
         var newpoll = await _pollService.AddAsync(request, cancellationtoken);
-        
+        if (newpoll.IsFailure)
+            return Problem(statusCode: StatusCodes.Status409Conflict, title: newpoll.Error.Code, detail: newpoll.Error.Description);
+
         // statues code 201
         return CreatedAtAction(nameof(Get), new { id = newpoll.Value!.Id }, newpoll.Value);
     }
@@ -58,8 +60,15 @@ public class PollsController : ControllerBase
     {
         var isupdated = await _pollService.UpdateAsync(id, request, cancellationtoken);
 
+
         if (isupdated.IsFailure)
-            return Problem(statusCode:StatusCodes.Status404NotFound,title:isupdated.Error.Code,detail:isupdated.Error.Description);
+        {
+            if (isupdated.GetType() == typeof(Result<PollResponse>))
+
+                return Problem(statusCode: StatusCodes.Status409Conflict, title: isupdated.Error.Code, detail: isupdated.Error.Description);
+            else
+                return Problem(statusCode: StatusCodes.Status404NotFound, title: isupdated.Error.Code, detail: isupdated.Error.Description);
+        }
         // statues code 204
         return NoContent();
 

@@ -1,6 +1,7 @@
 ﻿
 
 using ApiCourse.Authentications;
+using ApiCourse.Services.AuthService;
 using Microsoft.Extensions.Options;
 
 namespace ApiCourse.Controllers
@@ -23,7 +24,8 @@ namespace ApiCourse.Controllers
             var authResult = await  _authService.GetTokenAsync(request.Email, request.Password, cancellationToken);  
             if (authResult.IsFailure) 
             {
-                return Problem(statusCode: StatusCodes.Status400BadRequest, title: authResult.Error.Code, detail: authResult.Error.Description);
+                return Problem(statusCode: StatusCodes.Status400BadRequest
+                    , title: authResult.Error.Code, detail: authResult.Error.Description);
             }
             else
                 return Ok(authResult.Value);

@@ -1,6 +1,10 @@
 ﻿
 using ApiCourse.Authentications;
 using ApiCourse.Persistence;
+using ApiCourse.Services;
+using ApiCourse.Services.AuthService;
+
+using ApiCourse.Services.QuestionSerice;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -20,10 +24,12 @@ namespace ApiCourse
                    .AddAuthConfg(configuration);
 
            services.AddScoped<IPollService, PollService>();
-           services.AddScoped<IAuthService, AuthService   >();
-            // to make mapping config seen in all program
+           services.AddScoped<IAuthService, AuthService>();
+           services.AddScoped<IQuestionService, QuestionService>();
 
 
+            services.AddExceptionHandler<GlobalExceptionHandler>();
+            services.AddProblemDetails(); 
             return services;
         }
 
